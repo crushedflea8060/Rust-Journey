@@ -22,7 +22,7 @@ fn handle_connection(mut stream: TcpStream) -> Result<(), Box<dyn std::error::Er
     
     let request_line = lines.next()
         .ok_or("No request line")?
-        .map_err(|e| e.into())?;
+        .map_err(|e| Box::new(e) as Box<dyn std::error::Error>)?;
     
     let http_request: Vec<_> = lines
         .map(|result| result.unwrap())
