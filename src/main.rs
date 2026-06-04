@@ -39,6 +39,7 @@ fn handle_connection(mut stream: TcpStream) -> Result<(), Box<dyn std::error::Er
             .ok_or("Invalid filename")?
             .to_string()
     };
+    println!("{filename}");
     let (status_line, contents) = match fs::read_to_string(&filename) {
         Ok(contents) => ("HTTP/1.1 200 OK", contents),
         Err(_) => ("HTTP/1.1 404 NOT FOUND", fs::read_to_string("404.html").unwrap_or_else(|_| "404 Not Found".to_string())),
