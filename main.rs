@@ -16,18 +16,20 @@ fn main() {
     }
 }
 
-fn handle_connection<T: std::convert::From<std::io::Error> + std::error::Error + 'static>(mut stream: TcpStream) -> Result<(), Box<dyn std::error::Error>>{
+fn handle_connection(mut stream: TcpStream) -> Result<(), Box<dyn std::error::Error>>{
     let buf_reader = BufReader::new(&mut stream);
     let mut lines = buf_reader.lines();
+    
     let request_line = lines.next()
         .ok_or("No request line")?
-        .map_err(|e| <std::io::Error as Into<T>>::into(e))?;
+        .map_err(|e| e.into())?;
     
     let http_request: Vec<_> = lines
         .map(|result| result.unwrap())
         .take_while(|line| !line.is_empty())
         .collect();
     let client_addr = stream.peer_addr()?;
+    println!("Request: {request_line} - {client_addr:#?}\r\n{http_request:#?}");
     let path = request_line.split_whitespace().nth(1).ok_or("No path found")?;
     let path_without_query = path.split('?').next().ok_or("No path")?;
     let filename = if path_without_query == "/" {
@@ -47,7 +49,8 @@ fn handle_connection<T: std::convert::From<std::io::Error> + std::error::Error +
     let length = contents.len();
     let response =
         format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
-    println!("Request: {request_line} - {client_addr:#?}\r\nResponse: {status_line}\r\n{http_request:#?}");
+
     stream.write_all(response.as_bytes()).unwrap();
     Ok(())
+}
 }
