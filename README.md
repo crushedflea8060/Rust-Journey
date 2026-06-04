@@ -1,4 +1,4 @@
-# 1: Simple Web Server
+# 1: Simple HTTP Server
 ## Display Simple Http Pages
 Working on a way to display all files in the current directory.
 
