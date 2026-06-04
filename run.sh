@@ -1,3 +1,3 @@
 #!/bin/bash
 rustc main.rs
-./main
+./main && rm -f main
