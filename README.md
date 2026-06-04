@@ -14,7 +14,12 @@ chmod +x main
 ### Easiest Usage:
 ```bash
 ./run.sh
+# or
+
+./run.sh  >> /dev/null &
+# runs in the background with no output
 ```
+
  - Specific to POSIX, but it's the fastest
 ### Docker Usage:
 
