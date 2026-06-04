@@ -14,4 +14,4 @@ cargo run
 mv src/main.rs .
 rustc main.rs
 ```
-Gives you a binary that can process any of the html files in the current directory and subdirectories - (safer)
+Gives you a binary that can process any of the html files in the current directory - although it cannot process subdirectories to my knowledge.. yet.
