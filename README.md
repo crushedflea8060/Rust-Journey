@@ -11,7 +11,11 @@ chmod +x main
 ./main
 ```
 - Gives you a binary that can process any of the html files in the current directory - although it cannot process subdirectories to my knowledge.. yet.
-
+### Easiest Usage:
+```bash
+./run.sh
+'''
+ - Specific to POSIX, but it's the fastest
 ### Docker Usage:
 
 - Refer to the build.sh that has already been included.
