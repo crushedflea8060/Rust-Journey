@@ -17,9 +17,11 @@ fn main() {
 }
 
 fn handle_connection(mut stream: TcpStream) -> Result<(), Box<dyn std::error::Error>>{
-    let buf_reader = BufReader::new(&stream);
+    let buf_reader = BufReader::new(&mut stream);
     let mut lines = buf_reader.lines();
-    let request_line = lines.next().unwrap().unwrap();
+    let request_line = lines.next()
+        .ok_or("No request line")?
+        .map_err(|e| e.into())?;
     
     let http_request: Vec<_> = lines
         .map(|result| result.unwrap())
