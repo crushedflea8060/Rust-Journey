@@ -12,7 +12,7 @@ fn main() {
     for stream in listener.incoming() {
         let stream = stream.unwrap();
 
-        let _ = handle_connection::<T>(stream);
+        let _ = handle_connection(stream);
     }
 }
 
