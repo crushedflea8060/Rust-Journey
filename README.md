@@ -6,13 +6,9 @@ Working on a way to display all files in the current directory.
 
 ### Basic Usage:
 ```bash
-cargo run
-```
-- cargo will compile and run it for you
-### Other Usage:
-```bash
-mv src/main.rs .
 rustc main.rs
+chmod +x main
+./main
 ```
 - Gives you a binary that can process any of the html files in the current directory - although it cannot process subdirectories to my knowledge.. yet.
 
