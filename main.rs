@@ -53,4 +53,3 @@ fn handle_connection(mut stream: TcpStream) -> Result<(), Box<dyn std::error::Er
     stream.write_all(response.as_bytes()).unwrap();
     Ok(())
 }
-}
