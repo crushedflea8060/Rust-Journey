@@ -14,7 +14,7 @@ chmod +x main
 ### Easiest Usage:
 ```bash
 ./run.sh
-'''
+```
  - Specific to POSIX, but it's the fastest
 ### Docker Usage:
 
