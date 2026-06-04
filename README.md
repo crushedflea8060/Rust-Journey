@@ -18,5 +18,5 @@ chmod +x main
 - If on windows, read the file and copy over the commands, it should just "work".
 ```bash
 docker build -t web-app .
-docker run -d --rm --name web web-app 
+docker run -i -p 8000:8000 --rm --name web web-app 
 ```
