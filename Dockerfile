@@ -1,8 +1,9 @@
-FROM rust:1.96
-
-WORKDIR /app/
-
+FROM rust:1.96 as builder
+WORKDIR /app
 COPY . .
+RUN rustc main.rs -o rust-webserver
 
-RUN rustc main.rs
-CMD ["/app/main"]
+FROM debian:13-slim
+WORKDIR /app
+COPY --from=builder /app/rust-webserver /app/rust-webserver
+CMD ["/app/rust-webserver"]
