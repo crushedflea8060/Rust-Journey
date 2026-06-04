@@ -1,7 +1,7 @@
 # 1: Simple HTTP Server
 ## Display Simple Http Pages
 Working on a way to display all files in the current directory.
-
+Note that this will ___not___ work on alpine, use the docker option instead.
 ## Usage:
 
 ### Basic Usage:
