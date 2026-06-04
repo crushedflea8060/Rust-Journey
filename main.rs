@@ -16,7 +16,7 @@ fn main() {
     }
 }
 
-fn handle_connection(mut stream: TcpStream) -> Result<(), Box<dyn std::error::Error>>{
+fn handle_connection<T>(mut stream: TcpStream) -> Result<(), Box<dyn std::error::Error>>{
     let buf_reader = BufReader::new(&mut stream);
     let mut lines = buf_reader.lines();
     let request_line = lines.next()
