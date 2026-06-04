@@ -12,11 +12,11 @@ fn main() {
     for stream in listener.incoming() {
         let stream = stream.unwrap();
 
-        let _ = handle_connection(stream);
+        let _ = handle_connection::<T>(stream);
     }
 }
 
-fn handle_connection<T>(mut stream: TcpStream) -> Result<(), Box<dyn std::error::Error>>{
+fn handle_connection<T: std::convert::From<std::io::Error>>(mut stream: TcpStream) -> Result<(), Box<dyn std::error::Error>>{
     let buf_reader = BufReader::new(&mut stream);
     let mut lines = buf_reader.lines();
     let request_line = lines.next()
