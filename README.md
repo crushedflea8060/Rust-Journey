@@ -14,4 +14,9 @@ cargo run
 mv src/main.rs .
 rustc main.rs
 ```
-Gives you a binary that can process any of the html files in the current directory - although it cannot process subdirectories to my knowledge.. yet.
+- Gives you a binary that can process any of the html files in the current directory - although it cannot process subdirectories to my knowledge.. yet.
+
+### Docker Usage:
+
+- Refer to the build.sh that has already been included.
+- If on windows, read the file and copy over the commands, it should just "work".
