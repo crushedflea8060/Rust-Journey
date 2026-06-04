@@ -20,3 +20,7 @@ rustc main.rs
 
 - Refer to the build.sh that has already been included.
 - If on windows, read the file and copy over the commands, it should just "work".
+```bash
+docker build -t web-app .
+docker run -d --rm --name web web-app 
+```
