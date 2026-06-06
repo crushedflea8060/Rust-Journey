@@ -47,6 +47,7 @@ fn handle_connection(mut stream: TcpStream) -> Result<(), Box<dyn std::error::Er
         Err(_) => ("HTTP/1.1 404 NOT FOUND", fs::read_to_string("404.html").unwrap_or_else(|_| "404 Not Found".to_string())),
     };
     let length = contents.len();
+    println!("Response line: {status_line}");
     let response =
         format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 
