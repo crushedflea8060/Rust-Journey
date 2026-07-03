@@ -4,7 +4,6 @@ use std::{
     fs,
     io::{BufReader, prelude::*},
     net::{TcpListener, TcpStream},
-    path::Path,
 };
 
 fn main() {
@@ -33,24 +32,26 @@ fn handle_connection(mut stream: TcpStream) -> Result<(), Box<dyn std::error::Er
     let path = request_line.split_whitespace().nth(1).ok_or("No path found")?;
     let path_without_query = path.split('?').next().ok_or("No path")?;
     let filename = if path_without_query == "/" {
-        "index.html".to_string()
+        std::path::PathBuf::from("index.html")
     } else {
-        Path::new(path_without_query)
-            .file_name()
-            .ok_or("No filename")?
-            .to_str()
-            .ok_or("Invalid filename")?
-            .to_string()
+        let relative_path = path_without_query.trim_start_matches('/');
+        if relative_path.contains("..") || relative_path.contains('*') {
+            std::path::PathBuf::from("permission_denied.html")
+        }
+        else {
+        std::path::PathBuf::from(relative_path)
+        }
     };
-    let (status_line, contents) = match fs::read_to_string(&filename) {
+    let (status_line, contents) = match fs::read(&filename) {
         Ok(contents) => ("HTTP/1.1 200 OK", contents),
-        Err(_) => ("HTTP/1.1 404 NOT FOUND", fs::read_to_string("404.html").unwrap_or_else(|_| "404 Not Found".to_string())),
+        Err(_) => ("HTTP/1.1 404 NOT FOUND", fs::read("404.html").unwrap_or_else(|_| "404 Not Found".to_string().into())),
     };
     let length = contents.len();
     println!("Response line: {status_line}");
     let response =
-        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n");
 
     stream.write_all(response.as_bytes()).unwrap();
+    stream.write_all(&contents).unwrap();
     Ok(())
 }
